@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 
 
+
 // task buttons: 
 //      tick/untick button => div class=done/todo
 //      delete (bin) onClick task is deleted from todo
@@ -92,6 +93,10 @@ let Tasks = () => {
                     <div key={index} className="task" className={task.done.toString()}>
                         <input type="checkbox" checked={task.done} onChange={() => markDone(index)}></input>
                         <p onClick={() => removeHandler(index)}>{task.content}</p>
+                        <p onClick={() => removeHandler(index)}>&#128465; &#x1F5D1;</p>
+                        <p onClick={() => removeHandler(index)}>&#128193; &#x1F4C1;</p>
+                        <p onClick={() => removeHandler(index)}>&#128194; &#x1F4C2;</p>
+                        
                     </div>
 
                 )

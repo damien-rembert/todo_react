@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
+// import logo from './logo.svg';
+import './Todo.css';
 
 
-
-
-
-
-// task buttons: 
-//      tick/untick button => div class=done/todo
-//      delete (bin) onClick task is deleted from todo
-//      archive (folder) onClick task is added to archive and deleted from todo
-//      when in archive button is back to todo and reverts the operation
- 
-// CSS div class=task class=done/todo
-
-// task object? status: bool, content: string,
-// 2 arrays: todo / archive
-
-// add task when pressing enter
-
+// TODO
+// CSS if a task is very long the text should wrap
+// CSS checkbox and buttons should be sitting in squares and stay at the end of their side
 // grey out add task button when text field empty
-// see disabled in https://www.w3schools.com/html/html_form_input_types.asp
-// and https://www.w3schools.com/html/html_form_attributes.asp
-// do not accept 
-// empty field when add task button pressed
-
-// STRETCH
+    // see disabled in https://www.w3schools.com/html/html_form_input_types.asp
+    // and https://www.w3schools.com/html/html_form_attributes.asp
+// 2 arrays: todo / archive
+// archive (folder) onClick task is added to archive and deleted from todo
 // archive all done tasks
-// move done tasks to the bottom of the list
+// edit item click on pen button removes task but send text to the input field
+// if a task will be more than x characters the form should say it's too long
+// add a timestamp to task objects
+// sort by completed then time added https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+// DONE
+// when pressing enter in text field, add task
+
+
+
+
+
+
+
 
 
 
@@ -53,7 +52,12 @@ let Tasks = () => {
         let storedTasks = [...taskList];
         let oldTask = storedTasks.splice(index, 1)[0];
         let newTask = {done: (!oldTask.done), content: oldTask.content};
-        storedTasks.push(newTask);
+        if (newTask.done) {
+            storedTasks.push(newTask);            
+        } else {
+            storedTasks.unshift(newTask);
+        }
+        
         setTaskList(storedTasks);   
         
     }
@@ -63,7 +67,7 @@ let Tasks = () => {
         if (inputText) {
             let storedTasks = [...taskList];
             let newTask = {done: false, content: inputText};
-            storedTasks.push(newTask);
+            storedTasks.unshift(newTask);
             setInputText('');
             // replace the state array with the edited version 
             setTaskList(storedTasks);            
@@ -76,32 +80,36 @@ let Tasks = () => {
         setTaskList(storedTasks);
     }
 
+    const captureEnter = ({key}) => {
+        // create a p to add to the div
+        if (key === "Enter") {
+            addHandler();
+        }
+    }
+    
+
 
 
 
     return (
         <div >
-            <h1>tasks</h1>
-
-            <input onChange={inputHandler} value={inputText}/>            
+            <input onChange={inputHandler} onKeyPress={captureEnter} value={inputText}/>            
             <button onClick={addHandler}>add task</button>
 
-            {taskList.map((task, index) => {
-                // here we pass the index to that function using anonymous function
-                // return <h1 onClick={() => removeHandler(index)} key={index}>{number}</h1>
-                return (
-                    <div key={index} className="task" className={task.done.toString()}>
-                        <input type="checkbox" checked={task.done} onChange={() => markDone(index)}></input>
-                        <p onClick={() => removeHandler(index)}>{task.content}</p>
-                        <p onClick={() => removeHandler(index)}>&#128465; &#x1F5D1;</p>
-                        <p onClick={() => removeHandler(index)}>&#128193; &#x1F4C1;</p>
-                        <p onClick={() => removeHandler(index)}>&#128194; &#x1F4C2;</p>
-                        
-                    </div>
+            <div className='list'>
 
+            {taskList.map((task, index) => {
+                return (
+                    <div key={index} className={task.done.toString()}>
+                        <input  className='button' type="checkbox" checked={task.done} onChange={() => markDone(index)}></input>
+                        <p className='task'>{task.content}</p>
+                        <p className='button' onClick={() => removeHandler(index)}>&#x1F5D1;</p>
+                        <p className='button' onClick={() => removeHandler(index)}>&#128193; &#x1F4C1;</p>
+                        <p className='button' onClick={() => removeHandler(index)}>&#128194; &#x1F4C2;</p>
+                    </div>
                 )
-                
             })}
+            </div>
         </div>
     );
 
@@ -112,12 +120,6 @@ let Tasks = () => {
 
 
 let Todo = () => {
-
-
-
-
-
-
     return (
         <React.Fragment>
             <h1>Todo List</h1>

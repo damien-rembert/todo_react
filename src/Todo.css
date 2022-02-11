@@ -1,6 +1,7 @@
 body {
   font-family: Verdana, sans-serif;
   text-align: center;
+  
 }
 
 
@@ -15,15 +16,53 @@ p {
   font-size: large;
 }
 
+div.texttask {
+  flex-grow: 1;
+  display: flex;
+  /* justify-items:flex-end; */
+  align-items: center;
+  
+
+
+}
+
+p.task {
+  flex-grow: 1;
+  text-align: left;  
+}
+
+p.button {
+  padding: 15px;
+
+}
+
+.buttons button {
+
+}
+
+div.buttons {
+  display: flex;
+  flex-direction: column;
+  /* border-style: solid;
+  border-color: black;
+  border-width: 2px; */
+  justify-content: start;
+  align-items: flex-start;
+
+
+}
+
 div.true, div.false {
   background-color: lightgrey;
-  width: 75%;
+  width: 70%;
   display: flex;
   flex-direction: row;
   border-style: solid;
   border-color: grey;
   border-width: 2px;
   justify-content: space-around;
+  align-items: center;
+
 }
 
 div.true {
@@ -33,6 +72,7 @@ div.true {
 }
 
 .true p.task {
+  
   color: rgb(90, 89, 89);
   text-decoration: line-through;
   text-decoration-color: black;

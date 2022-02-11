@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
-// import logo from './logo.svg';
 import './Todo.css';
 
 
 // TODO
 // make the meaning of "switch mode" obvious
-// add text on hover for buttons
-// CSS if a task is very long the text should wrap
-// CSS checkbox and buttons should be sitting in squares and stay at the end of their side
+// CSS add a bit of padding
 // grey out add task button when text field empty
     // see disabled in https://www.w3schools.com/html/html_form_input_types.asp
     // and https://www.w3schools.com/html/html_form_attributes.asp
-// 2 arrays: todo / archive
-// archive (folder) onClick task is added to archive and deleted from todo
 // archive all done tasks
-// edit item click on pen button removes task but send text to the input field
 // if a task will be more than x characters the form should say it's too long
 // add a timestamp to task objects
 // sort by completed then time added https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 // DONE
 // when pressing enter in text field, add task
+// add text for buttons
+// CSS if a task is very long the text should wrap
+// CSS checkbox and buttons should be sitting in squares and stay at the end of their side
+// 2 arrays: todo / archive
+// archive (folder) onClick task is added to archive and deleted from todo
+// edit item click on pen button removes task but send text to the input field
+
 
 
 
 let Tasks = () => {
 
     // task object? status: bool, content: string,
+
+
     // let task1 = {done: false, content: "I'm task 1"};
     // let task2 = {done: false, content: "I'm task 2"};
     // let task3 = {done: false, content: "I'm task 3"};
@@ -36,32 +39,32 @@ let Tasks = () => {
     // const [taskList, setTaskList] = useState([task1, task2, task3]);
     // const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
 
-
     const [taskList, setTaskList] = useState([]);
     const [archiveList, setArchiveList] = useState([]);
+
     const [inputText, setInputText] = useState("");
-
-
 
     const inputHandler = (event) => {
         setInputText(event.target.value);
     }
 
+    const spliceTask = (index) => {
+        let storedTasks = [...taskList];
+        let deletedTask = storedTasks.splice(index, 1)[0];
+        setTaskList(storedTasks);
+        return deletedTask;
+    }
+
     const tickHandler = (index) => {
-        // console.log("click");
-        // see checked https://www.w3schools.com/html/html_form_input_types.asp
-        // and https://www.w3schools.com/html/html_form_attributes.asp
         let storedTasks = [...taskList];
         let oldTask = storedTasks.splice(index, 1)[0];
-        let newTask = {done: (!oldTask.done), content: oldTask.content};
-        if (newTask.done) {
-            storedTasks.push(newTask);            
+        oldTask = {done: (!oldTask.done), content: oldTask.content};
+        if (oldTask.done) {
+            storedTasks.push(oldTask);            
         } else {
-            storedTasks.unshift(newTask);
+            storedTasks.unshift(oldTask);
         }
-        
-        setTaskList(storedTasks);   
-        
+        setTaskList(storedTasks);
     }
 
     const addHandler = () => {
@@ -76,12 +79,6 @@ let Tasks = () => {
         } 
     }
 
-    const removeHandler = (index) => {
-        let storedTasks = [...taskList];
-        storedTasks.splice(index, 1);
-        setTaskList(storedTasks);
-    }
-
     const captureEnter = ({key}) => {
         // create a p to add to the div
         if (key === "Enter") {
@@ -90,19 +87,16 @@ let Tasks = () => {
     }
 
     const archiveHandler = (index) => {
-        let storedTasks = [...taskList];
-        let storedTask = storedTasks.splice(index, 1);
-        setTaskList(storedTasks);
+        let storedTask = spliceTask(index);
         let storedArchive = [...archiveList];
         storedArchive.push(storedTask);
         setArchiveList(storedArchive);
     }
 
     const editHandler = (index) => {
-        let storedTasks = [...taskList];
-        setInputText(storedTasks.splice(index, 1)[0].content);
-        setTaskList(storedTasks);
+        setInputText(spliceTask(index).content);
     }
+
     const switchArray = (index) => {
         let storedTasks = [...taskList];
         let storedArchive = [...archiveList];
@@ -126,10 +120,17 @@ let Tasks = () => {
                 return (
                     <div key={index} className={task.done.toString()}>
                         <input  className='button' type="checkbox" checked={task.done} onChange={() => tickHandler(index)}></input>
-                        <p className='task'>{task.content}</p>
-                        <p className='button' onClick={() => removeHandler(index)}>&#x1F5D1;</p>
-                        <p className='button' onClick={() => archiveHandler(index)}>&#128193;</p>
-                        <p className='button' onClick={() => editHandler(index)}>&#128393;</p>
+                        <div className='texttask'>
+                            <p className='task'>{task.content}</p>
+                        </div>
+                        <div className='buttons'>
+                            <label><button className='button' onClick={() => spliceTask(index)}>&#x1F5D1;</button>
+                            delete</label>
+                            <label><button className='button' onClick={() => archiveHandler(index)}>&#128193;</button>
+                            archive</label>
+                            <label><button className='button' onClick={() => editHandler(index)}>&#128393;</button>
+                            edit</label>
+                        </div>
                     </div>
                 )
             })}
@@ -150,10 +151,13 @@ let Tasks = () => {
 
 let Todo = () => {
     return (
-        <React.Fragment>
+
+        // <React.Fragment>
+        <div className='title'>
             <h1>Todo List</h1>
-            <Tasks/>
-        </React.Fragment>
+            <Tasks />
+        </div>
+        // </React.Fragment>
     )
 };
 

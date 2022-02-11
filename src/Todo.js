@@ -4,6 +4,8 @@ import './Todo.css';
 
 
 // TODO
+// make the meaning of "switch mode" obvious
+// add text on hover for buttons
 // CSS if a task is very long the text should wrap
 // CSS checkbox and buttons should be sitting in squares and stay at the end of their side
 // grey out add task button when text field empty
@@ -22,21 +24,21 @@ import './Todo.css';
 
 
 
-
-
-
-
-
-
-
 let Tasks = () => {
 
     // task object? status: bool, content: string,
-    let task1 = {done: false, content: "I'm task 1"};
-    let task2 = {done: false, content: "I'm task 2"};
-    let task3 = {done: false, content: "I'm task 3"};
+    // let task1 = {done: false, content: "I'm task 1"};
+    // let task2 = {done: false, content: "I'm task 2"};
+    // let task3 = {done: false, content: "I'm task 3"};
+    // let atask1 = {done: false, content: "I'm atask 1"};
+    // let atask2 = {done: false, content: "I'm atask 2"};
+    // let atask3 = {done: false, content: "I'm taask 3"};
+    // const [taskList, setTaskList] = useState([task1, task2, task3]);
+    // const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
 
-    const [taskList, setTaskList] = useState([task1, task2, task3]);
+
+    const [taskList, setTaskList] = useState([]);
+    const [archiveList, setArchiveList] = useState([]);
     const [inputText, setInputText] = useState("");
 
 
@@ -45,8 +47,8 @@ let Tasks = () => {
         setInputText(event.target.value);
     }
 
-    const markDone = (index) => {
-        console.log("click");
+    const tickHandler = (index) => {
+        // console.log("click");
         // see checked https://www.w3schools.com/html/html_form_input_types.asp
         // and https://www.w3schools.com/html/html_form_attributes.asp
         let storedTasks = [...taskList];
@@ -86,6 +88,28 @@ let Tasks = () => {
             addHandler();
         }
     }
+
+    const archiveHandler = (index) => {
+        let storedTasks = [...taskList];
+        let storedTask = storedTasks.splice(index, 1);
+        setTaskList(storedTasks);
+        let storedArchive = [...archiveList];
+        storedArchive.push(storedTask);
+        setArchiveList(storedArchive);
+    }
+
+    const editHandler = (index) => {
+        let storedTasks = [...taskList];
+        setInputText(storedTasks.splice(index, 1)[0].content);
+        setTaskList(storedTasks);
+    }
+    const switchArray = (index) => {
+        let storedTasks = [...taskList];
+        let storedArchive = [...archiveList];
+        setTaskList(storedArchive);
+        setArchiveList(storedTasks);
+    }
+
     
 
 
@@ -101,15 +125,20 @@ let Tasks = () => {
             {taskList.map((task, index) => {
                 return (
                     <div key={index} className={task.done.toString()}>
-                        <input  className='button' type="checkbox" checked={task.done} onChange={() => markDone(index)}></input>
+                        <input  className='button' type="checkbox" checked={task.done} onChange={() => tickHandler(index)}></input>
                         <p className='task'>{task.content}</p>
                         <p className='button' onClick={() => removeHandler(index)}>&#x1F5D1;</p>
-                        <p className='button' onClick={() => removeHandler(index)}>&#128193; &#x1F4C1;</p>
-                        <p className='button' onClick={() => removeHandler(index)}>&#128194; &#x1F4C2;</p>
+                        <p className='button' onClick={() => archiveHandler(index)}>&#128193;</p>
+                        <p className='button' onClick={() => editHandler(index)}>&#128393;</p>
                     </div>
                 )
             })}
+
             </div>
+            <div>
+                <button onClick={switchArray}>Switch mode</button>
+            </div>
+
         </div>
     );
 

@@ -30,17 +30,17 @@ let Tasks = () => {
     // task object? status: bool, content: string,
 
 
-    // let task1 = {done: false, content: "I'm task 1"};
-    // let task2 = {done: false, content: "I'm task 2"};
-    // let task3 = {done: false, content: "I'm task 3"};
-    // let atask1 = {done: false, content: "I'm atask 1"};
-    // let atask2 = {done: false, content: "I'm atask 2"};
-    // let atask3 = {done: false, content: "I'm taask 3"};
-    // const [taskList, setTaskList] = useState([task1, task2, task3]);
-    // const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
+    let task1 = {done: false, content: "I'm task 1"};
+    let task2 = {done: false, content: "I'm task 2"};
+    let task3 = {done: false, content: "I'm task 3"};
+    let atask1 = {done: false, content: "I'm atask 1"};
+    let atask2 = {done: false, content: "I'm atask 2"};
+    let atask3 = {done: false, content: "I'm taask 3"};
+    const [taskList, setTaskList] = useState([task1, task2, task3]);
+    const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
 
-    const [taskList, setTaskList] = useState([]);
-    const [archiveList, setArchiveList] = useState([]);
+    // const [taskList, setTaskList] = useState([]);
+    // const [archiveList, setArchiveList] = useState([]);
 
     const [inputText, setInputText] = useState("");
 
@@ -103,51 +103,74 @@ let Tasks = () => {
         setTaskList(storedArchive);
         setArchiveList(storedTasks);
     }
-
     
-
-
-
-
     return (
         <div >
             <input onChange={inputHandler} onKeyPress={captureEnter} value={inputText}/>            
             <button onClick={addHandler}>add task</button>
 
-            <div className='list'>
+            <div key='list' className='list'>
 
             {taskList.map((task, index) => {
-                return (
-                    <div key={index} className={task.done.toString()}>
-                        <input  className='button' type="checkbox" checked={task.done} onChange={() => tickHandler(index)}></input>
-                        <div className='texttask'>
-                            <p className='task'>{task.content}</p>
-                        </div>
-                        <div className='buttons'>
-                            <label><button className='button' onClick={() => spliceTask(index)}>&#x1F5D1;</button>
-                            delete</label>
-                            <label><button className='button' onClick={() => archiveHandler(index)}>&#128193;</button>
-                            archive</label>
-                            <label><button className='button' onClick={() => editHandler(index)}>&#128393;</button>
-                            edit</label>
-                        </div>
-                    </div>
-                )
+                let doneString = task.done.toString();
+                return <Task key={index.toString()} index={index} doneString={doneString} done={task.done} content={task.content} ticker={tickHandler} remover={spliceTask} archiver={archiveHandler} editer={editHandler}/>
             })}
-
             </div>
             <div>
                 <button onClick={switchArray}>Switch mode</button>
             </div>
 
         </div>
-    );
+    );    
+    // return (
+    //     <div >
+    //         <input onChange={inputHandler} onKeyPress={captureEnter} value={inputText}/>            
+    //         <button onClick={addHandler}>add task</button>
 
+    //         <div className='list'>
 
+    //         {taskList.map((task, index) => {
+    //             return (
+    //                 <div key={index} className={task.done.toString()}>
+    //                     <input  className='button' type="checkbox" checked={task.done} onChange={() => tickHandler(index)}></input>
+    //                     <div className='texttask'>
+    //                         <p className='task'>{task.content}</p>
+    //                     </div>
+    //                     <div className='buttons'>
+    //                         <label><button className='button' onClick={() => spliceTask(index)}>&#x1F5D1;</button>
+    //                         delete</label>
+    //                         <label><button className='button' onClick={() => archiveHandler(index)}>&#128193;</button>
+    //                         archive</label>
+    //                         <label><button className='button' onClick={() => editHandler(index)}>&#128393;</button>
+    //                         edit</label>
+    //                     </div>
+    //                 </div>
+    //             )
+    //         })}
+    //         </div>
+    //         <div>
+    //             <button onClick={switchArray}>Switch mode</button>
+    //         </div>
 
+    //     </div>
+    // );
 }
 
-
+let Task = (props) => {
+    return (
+        <div className={props.doneString}>
+            <input  className='button' type="checkbox" checked={props.done} onChange={() => props.ticker(props.index)}></input>
+                <div className='texttask'>
+                    <p className='task'>{props.content}</p>
+                </div>
+            <div className='buttons'>
+                <label><button className='button' onClick={() => props.remover(props.index)}>&#x1F5D1;</button>delete</label>
+                <label><button className='button' onClick={() => props.archiver(props.index)}>&#128193;</button>archive</label>
+                <label><button className='button' onClick={() => props.editer(props.index)}>&#128393;</button>edit</label>
+                </div>
+        </div>
+    )
+}
 
 let Todo = () => {
     return (

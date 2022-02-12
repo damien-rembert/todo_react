@@ -30,17 +30,17 @@ let Tasks = () => {
     // task object? status: bool, content: string,
 
 
-    let task1 = {done: false, content: "I'm task 1"};
-    let task2 = {done: false, content: "I'm task 2"};
-    let task3 = {done: false, content: "I'm task 3"};
-    let atask1 = {done: false, content: "I'm atask 1"};
-    let atask2 = {done: false, content: "I'm atask 2"};
-    let atask3 = {done: false, content: "I'm taask 3"};
-    const [taskList, setTaskList] = useState([task1, task2, task3]);
-    const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
+    // let task1 = {done: false, content: "I'm task 1"};
+    // let task2 = {done: false, content: "I'm task 2"};
+    // let task3 = {done: false, content: "I'm task 3"};
+    // let atask1 = {done: false, content: "I'm atask 1"};
+    // let atask2 = {done: false, content: "I'm atask 2"};
+    // let atask3 = {done: false, content: "I'm taask 3"};
+    // const [taskList, setTaskList] = useState([task1, task2, task3]);
+    // const [archiveList, setArchiveList] = useState([atask1, atask2, atask3]);
 
-    // const [taskList, setTaskList] = useState([]);
-    // const [archiveList, setArchiveList] = useState([]);
+    const [taskList, setTaskList] = useState([]);
+    const [archiveList, setArchiveList] = useState([]);
 
     const [inputText, setInputText] = useState("");
 
@@ -68,19 +68,16 @@ let Tasks = () => {
     }
 
     const addHandler = () => {
-        // create a new array as the actual one cannot be edited directly
         if (inputText) {
             let storedTasks = [...taskList];
             let newTask = {done: false, content: inputText};
             storedTasks.unshift(newTask);
             setInputText('');
-            // replace the state array with the edited version 
             setTaskList(storedTasks);            
         } 
     }
 
     const captureEnter = ({key}) => {
-        // create a p to add to the div
         if (key === "Enter") {
             addHandler();
         }
@@ -122,38 +119,6 @@ let Tasks = () => {
 
         </div>
     );    
-    // return (
-    //     <div >
-    //         <input onChange={inputHandler} onKeyPress={captureEnter} value={inputText}/>            
-    //         <button onClick={addHandler}>add task</button>
-
-    //         <div className='list'>
-
-    //         {taskList.map((task, index) => {
-    //             return (
-    //                 <div key={index} className={task.done.toString()}>
-    //                     <input  className='button' type="checkbox" checked={task.done} onChange={() => tickHandler(index)}></input>
-    //                     <div className='texttask'>
-    //                         <p className='task'>{task.content}</p>
-    //                     </div>
-    //                     <div className='buttons'>
-    //                         <label><button className='button' onClick={() => spliceTask(index)}>&#x1F5D1;</button>
-    //                         delete</label>
-    //                         <label><button className='button' onClick={() => archiveHandler(index)}>&#128193;</button>
-    //                         archive</label>
-    //                         <label><button className='button' onClick={() => editHandler(index)}>&#128393;</button>
-    //                         edit</label>
-    //                     </div>
-    //                 </div>
-    //             )
-    //         })}
-    //         </div>
-    //         <div>
-    //             <button onClick={switchArray}>Switch mode</button>
-    //         </div>
-
-    //     </div>
-    // );
 }
 
 let Task = (props) => {
@@ -175,12 +140,10 @@ let Task = (props) => {
 let Todo = () => {
     return (
 
-        // <React.Fragment>
         <div className='title'>
             <h1>Todo List</h1>
             <Tasks />
         </div>
-        // </React.Fragment>
     )
 };
 

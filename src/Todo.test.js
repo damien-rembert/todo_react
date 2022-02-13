@@ -1,18 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Todo from './Todo';
-<<<<<<< HEAD
-// import {screen} from '@testing-library/dom'
-=======
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
->>>>>>> 8e209fca2283c1f8e23c3688ec6b6710fcc75964
 
 
-import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
-// import { render } from '@testing-library/react';
 
 
 // h1 Todo List
@@ -58,7 +51,6 @@ describe("initial elements", () => {
   });
 });
 
-<<<<<<< HEAD
 describe("text input", () => {
   test("input element is in the document", () => {
     render(<Todo />);
@@ -134,11 +126,3 @@ describe("after adding one task", () => {
     expect(element.length).toBe(5)
   });
 })
-=======
-
-test('renders header', () => {
-  render(<Todo />);
-  const element = screen.getByRole("textbox");
-  expect(element).toBeInTheDocument();
-});
->>>>>>> 8e209fca2283c1f8e23c3688ec6b6710fcc75964

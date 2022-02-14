@@ -7,10 +7,10 @@ body {
 
 
 h1 {
-  background-color: #222;
+  background:rgba(192, 69, 128, 0.753);
   height: 150px;
   padding: 20px;
-  color: white;
+  color: white;  
 }
 
 p {
@@ -49,7 +49,7 @@ div.buttons {
   /* border-style: solid;
   border-color: black;
   border-width: 2px; */
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
 
 
